@@ -1,0 +1,21 @@
+Bootstrap: docker
+From: condaforge/miniforge3:latest
+
+# Tiny CPU image for the fpocket full run on Aurum (LBS-generality T3-2nd).
+# fpocket + gemmi (cif->pdb not needed; fpocket 4 reads mmCIF) + pandas/numpy for the
+# in-container parse (run_fpocket.py). Build on any node (no GPU):
+#   sbatch fpocket_build.sbatch   (or salloc + apptainer build --fakeroot ...)
+
+%post
+    set -eux
+    mamba install -y -n base -c conda-forge fpocket gemmi pandas numpy
+    mamba clean -a -y
+
+%test
+    fpocket -ver 2>&1 | head -1 || echo "fpocket present"
+    python -c "import pandas, numpy, gemmi; print('deps ok')"
+
+%labels
+    project AHoJ-AlphaFold
+    stage 06_lbs_generality-hpc
+    tool fpocket

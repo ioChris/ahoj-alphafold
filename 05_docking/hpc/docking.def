@@ -1,0 +1,44 @@
+Bootstrap: docker
+From: condaforge/miniforge3:latest
+
+# Apptainer image for the AHoJ-AF GPU docking run on Aurum (gen-d / L40S).
+# Build on a gen-d node (login node blocks heavy work; no GPU needed for the build).
+# NOTE: mksquashfs 4.4 on the 192-core gen-d nodes throws "FATAL ERROR: Bug in orderer"
+# (a high-thread-count race) at SIF packing -> force single-threaded via --mksquashfs-args.
+# --fakeroot works via a root-mapped namespace; compute nodes reach the net via login NAT.
+#   salloc --constraint=gen-d&scratch --cpus-per-task=8 --time=01:00:00 --mem=48G
+#   apptainer build --fakeroot --mksquashfs-args "-processors 1" $HOME/docking.sif docking.def
+# Run (host GPU driver via --nv):
+#   apptainer exec --nv $HOME/docking.sif unidock --version   # unidock --version needs no GPU
+#
+# Uni-Dock ships its own CUDA runtime via conda; only the host NVIDIA driver
+# (exposed by --nv) is needed, so no CUDA base image is required.
+
+%post
+    set -eux
+    mamba install -y -n base -c conda-forge \
+        python=3.11 \
+        unidock \
+        vina \
+        rdkit \
+        meeko \
+        gemmi \
+        spyrmsd \
+        numpy pandas pyarrow \
+        openbabel
+    mamba clean -a -y
+
+%environment
+    export PYTHONNOUSERSITE=1
+    export MPLBACKEND=Agg
+
+%test
+    set -e
+    python -c "import rdkit, meeko, gemmi, pandas, pyarrow; print('py deps ok')"
+    unidock --version || echo "unidock present (version flag may differ)"
+    vina --version
+
+%labels
+    project AHoJ-AlphaFold
+    stage 05_docking-hpc
+    engine Uni-Dock (GPU) + Vina (CPU fallback)

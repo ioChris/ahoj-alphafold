@@ -1,0 +1,71 @@
+cff-version: 1.2.0
+message: "If you use this code, please cite the article below and the data record."
+title: "AHoJ-AlphaFold: analysis code for 'A tale of two states: AlphaFold binding pockets on the apo–holo continuum'"
+type: software
+repository-code: "https://github.com/ioChris/ahoj-alphafold"
+license: MIT
+authors:
+  - given-names: Christos P.
+    family-names: Feidakis
+    orcid: "https://orcid.org/0000-0001-7987-6045"
+    affiliation: "Institute of Organic Chemistry and Biochemistry, Czech Academy of Sciences, Prague, Czech Republic"
+  - given-names: Radoslav
+    family-names: Krivák
+    orcid: "https://orcid.org/0000-0001-7521-0844"
+    affiliation: "Institute of Organic Chemistry and Biochemistry, Czech Academy of Sciences, Prague, Czech Republic"
+  - given-names: Chloé C. D.
+    family-names: Weiler
+    orcid: "https://orcid.org/0009-0007-2775-0142"
+    affiliation: "Department of Cell Biology, Faculty of Science, Charles University, Prague, Czech Republic; Faculty of Engineering Sciences, Heidelberg University, Heidelberg, Germany"
+  - given-names: Derrick
+    family-names: Agwora Nyamwaya
+    orcid: "https://orcid.org/0009-0003-0763-4196"
+    affiliation: "Department of Cell Biology, Faculty of Science, Charles University, Prague, Czech Republic"
+  - given-names: David
+    family-names: Hoksza
+    orcid: "https://orcid.org/0000-0003-4679-0557"
+    affiliation: "Department of Software Engineering, Faculty of Mathematics and Physics, Charles University, Prague, Czech Republic"
+  - given-names: Jiří
+    family-names: Vondrášek
+    orcid: "https://orcid.org/0000-0002-6066-973X"
+    affiliation: "Institute of Organic Chemistry and Biochemistry, Czech Academy of Sciences, Prague, Czech Republic"
+  - given-names: Marian
+    family-names: Novotný
+    orcid: "https://orcid.org/0000-0001-8788-3202"
+    affiliation: "Department of Cell Biology, Faculty of Science, Charles University, Prague, Czech Republic"
+identifiers:
+  - type: doi
+    value: 10.5281/zenodo.23243349
+    description: "Data record: tables, predictions, docking results and AlphaFold models behind the manuscript"
+keywords:
+  - AlphaFold
+  - apo/holo
+  - binding sites
+  - protein conformations
+  - AHoJ-DB
+preferred-citation:
+  type: article
+  title: "A tale of two states: AlphaFold binding pockets on the apo–holo continuum"
+  status: submitted
+  authors:
+    - given-names: Christos P.
+      family-names: Feidakis
+      orcid: "https://orcid.org/0000-0001-7987-6045"
+    - given-names: Radoslav
+      family-names: Krivák
+      orcid: "https://orcid.org/0000-0001-7521-0844"
+    - given-names: Chloé C. D.
+      family-names: Weiler
+      orcid: "https://orcid.org/0009-0007-2775-0142"
+    - given-names: Derrick
+      family-names: Agwora Nyamwaya
+      orcid: "https://orcid.org/0009-0003-0763-4196"
+    - given-names: David
+      family-names: Hoksza
+      orcid: "https://orcid.org/0000-0003-4679-0557"
+    - given-names: Jiří
+      family-names: Vondrášek
+      orcid: "https://orcid.org/0000-0002-6066-973X"
+    - given-names: Marian
+      family-names: Novotný
+      orcid: "https://orcid.org/0000-0001-8788-3202"

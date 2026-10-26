@@ -1,0 +1,35 @@
+# AHoJ-AlphaFold — Python dependencies
+# Loose lower bounds; any reasonably recent versions work. Python >= 3.9 (3.11/3.12 used in development).
+# Install:  pip install -r requirements.txt
+
+# --- Core scientific stack ---
+pandas>=1.5
+numpy>=1.23
+scipy>=1.9
+matplotlib>=3.6
+scikit-learn>=1.1    # logistic-regression AUCs (ratio vs class), DBSCAN (IF-SitePred clustering)
+seaborn>=0.12        # two exploratory plots
+
+# --- Plotting: interactive + static export (Sankey / classification-flow figures) ---
+plotly>=5.10
+kaleido>=0.2.1          # static image export (PNG/SVG/PDF) for plotly figures
+
+# --- Structure parsing (AlphaFold-DB mmCIF -> pocket residue selections & geometry) ---
+gemmi>=0.6
+
+# --- Downloads (AlphaFill JSONs, AlphaFold-DB models) ---
+requests>=2.28
+tqdm>=4.64
+
+# --- Misc image handling (a few plotting scripts) ---
+Pillow>=9.2
+
+# --- Optional: editable PowerPoint export of Figure 1 (make_figure1.py --pptx) ---
+# python-pptx>=0.6.21
+
+# --- Optional: SI Figure S9d structure render (plotting/manuscript_v4/render_si_entry_pymol_v4.py), separate env ---
+# pymol-open-source (conda-forge)
+
+# --- Classification code (00_classification/kde_classifier/): run bundles and tests ---
+pyyaml>=6.0           # run_types.py --bundle only
+pytest>=7             # tests

@@ -1,0 +1,72 @@
+# =====================================================================
+# .gitignore — AHoJ-AlphaFold analysis repository
+# This repo tracks CODE + DOCS only. All heavy inputs/outputs live in an
+# external work_dir (see README "Data availability"), not in the repo.
+# =====================================================================
+
+# ---- Python bytecode / caches ----
+__pycache__/
+*.py[cod]
+*$py.class
+.pytest_cache/
+.mypy_cache/
+.ipynb_checkpoints/
+
+# ---- Virtual environments ----
+.venv/
+venv/
+env/
+ENV/
+.conda/
+conda-meta/
+
+# ---- IDE / editor / OS ----
+.idea/
+.vscode/
+*.swp
+*~
+.spyproject/
+.spyderproject/
+.DS_Store
+Thumbs.db
+
+# ---- Claude Code local settings ----
+.claude/settings.local.json
+
+# ---- Local, machine-specific path configuration (PERSONAL — never commit) ----
+# Real paths live here; the committed template is common/paths.example.ini.
+common/paths.ini
+paths.ini
+.env
+
+# ---- Stray empty scratch dirs occasionally created by tooling ----
+_avg_/
+**/_avg_/
+
+# ---- Heavy data / archives (must not be tracked; data lives in work_dir) ----
+*.zip
+*.gz
+*.tgz
+*.7z
+*.pkl
+*.pickle
+*.parquet
+*.feather
+*.h5
+*.hdf5
+*.npy
+*.npz
+*.cif
+*.cif.gz
+*.pdb
+*.pdb.gz
+
+# ---- Generated analysis outputs ----
+# Scripts write figures/tables into the external work_dir. If you ever render
+# outputs *inside* the repo, uncomment the lines below to keep them untracked
+# (force-add intentional, small assets with `git add -f`).
+# *.png
+# *.pdf
+# *.svg
+# *.csv
+# *.tsv

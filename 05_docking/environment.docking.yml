@@ -1,0 +1,32 @@
+# Conda environment for the docking stage — ligand/reference-pose prep on our side
+# AND the colleague's Vina run. Draft spec (not auto-installed).
+#
+#   conda env create -f 05_docking/environment.docking.yml
+#   conda activate ahoj-docking
+#
+# What needs it:
+#   - resolve_ligands.py  : rdkit (probe 3D embedding + heavy-atom counts; CCD SDF
+#                           fetch works without rdkit)
+#   - build_reference_poses.py : gemmi (validated on the py311 env, gemmi 0.7.3)
+#   - build_docking_manifest.py --box_mode bbox : gemmi
+#   - the docking run itself : meeko (PDBQT prep) + vina (AutoDock Vina 1.2.x)
+#
+# NOTE: on this machine gemmi already lives in the `py311` env; rdkit/meeko/vina
+# are absent everywhere. This env gathers them in one place.
+name: ahoj-docking
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - numpy
+  - pandas
+  - rdkit          # ligand prep (SMILES->3D), heavy-atom counts, symmetry-corrected RMSD (spyrmsd)
+  - gemmi          # structure I/O, pocket bbox, reference-pose superposition
+  - pip
+  - pip:
+      - meeko      # receptor/ligand -> PDBQT for Vina
+      - vina       # AutoDock Vina 1.2.x (Python API + CLI)
+      - spyrmsd    # symmetry-corrected ligand RMSD (redock success)
+# Full run on GPU (colleague, NVIDIA 3090/4090):
+#   - Uni-Dock : install separately per https://github.com/dptech-corp/Uni-Dock (needs CUDA).
+#   - gnina (optional CNN rescoring): separate binary/build.

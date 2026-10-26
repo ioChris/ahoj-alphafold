@@ -1,0 +1,82 @@
+{
+  "_comment": "Holo-centric run on AHoJ 2.4.x/2.5.x (one job per ligand instance; docs/RUN_TYPES.md). Inherits the full_run_3 classifier. Run-type keys are null = the holo-2.4 profile decides: add_query_row 1, relabel v2c_ions_demote_only (AHoJ's gate labels stand; only ion-only holo calls demote to A**), ion_rule query_disables, volume column 'volume' (the 2.4 volume_mode the run used; convex by default), model row AF_model. OPEN RULES for the author (RUN_TYPES.md section 8): gate vs report_only in the AHoJ run, and the volume estimator (convex vs a PyVOL mode). Give --bundle <dir> or --root_data_dir, and --summary_dir.",
+  "processing_function": "do_kde_plots_and_classification",
+
+  "run_type": "holo-2.4",
+  "bundle": null,
+  "sites_tsv": null,
+  "add_query_row": null,
+  "relabel_mode": null,
+  "ion_rule": null,
+  "additive_rule": null,
+  "gate": null,
+  "volume_column": null,
+  "volume_nan_to_zero": null,
+  "model_row": null,
+  "key_format": null,
+  "additives_file": null,
+  "allow_undo_gate": 0,
+
+  "resolution_soft": null,
+  "drop_no_resolution": 1,
+  "bndgrsds_prcnt_seqres": 75,
+  "bndgrsds_prcnt_obs": 75,
+  "full_pockets_aligned": 0,
+  "pocket_len_resis3": 0,
+  "min_apo": 0,
+  "min_holo": 0,
+  "min_apoholo": 1,
+  "keep_no_model": 0,
+  "columns_nozero": ["RoG", "bfac_t", "bfac_avg", "resolution"],
+
+  "relabel_apoholo": 1,
+  "filter_candidates": 1,
+  "rog_diff_thrs_query": 0.6,
+  "rog_diff_thrs_mean": null,
+  "pocket_dist": null,
+  "dist_outlier_thr": 20.0,
+
+  "kde_extend": true,
+  "margin_cap_scale": 1.0,
+  "bw_mode": "pooled",
+  "bw_scale": 0.75,
+  "prior_mode": "equal",
+
+  "num_processes": 8,
+  "random_seed": 42,
+
+  "pocket_class_metrics": ["pocket_rms", "sasa", "volume", "RoG"],
+  "chain_class_metrics": ["pocket_dist", "tm_score", "rmsd"],
+  "separation_weights": {"w_center": 0.5, "w_iqr": 0.3, "w_extremes": 0.2},
+
+  "query_summary_deltas": 1,
+  "query_summary_metrics": ["pocket_rms", "volume", "sasa", "RoG", "tm_score", "rmsd", "pocket_len", "bfac_avg"],
+  "query_summary_stats": ["min", "max", "mean", "std_dev", "iqr"],
+  "separate_metric_summary": 1,
+
+  "collect_query_meta": 1,
+  "query_meta_role": "Q",
+
+  "general_violins": 0,
+  "dp_curves": 1,
+  "kde_curves": 1,
+  "kde_violins": 1,
+  "conf_bars": 0,
+  "separate_metrics": 1,
+  "show_plots": 0,
+  "plot_font": "Helvetica Neue",
+  "svg_fonttype": "none",
+
+  "save_statistics": 1,
+  "save_filtered_df": 1,
+  "save_per_method_json": 0,
+  "save_relabeled_csv": 0,
+
+  "zip_plots_dir": 0,
+  "zip_stats_dir": 0,
+  "del_dir_after_zip": true,
+
+  "root_data_dir": null,
+  "root_mirror_dir": null,
+  "summary_dir": null
+}

@@ -1,0 +1,66 @@
+Bootstrap: docker
+From: condaforge/miniforge3:latest
+
+# Apptainer image for the AHoJ-AF IF-SitePred run (LBS-generality T3-2nd) on Aurum
+# gen-d / L40S. TWO conda envs baked in (mirrors the locally de-risked recipe):
+#   esm_env   - ESM-IF1 (GPU): per-residue embeddings -> 40 LightGBM -> binding residues
+#   pymol_env - PyMOL 1.5A grid + DBSCAN -> up to 3 ranked 3D centres (CPU)
+#
+# CRITICAL de-risked pins (from local validation 2026-07-09 — do NOT drop):
+#   * biotite<1   fair-esm's inverse_folding imports the removed filter_backbone
+#   * pandas IN pymol_env   predict_centres imports it
+#   * gemmi in esm_env      on-the-fly cif.gz -> chain-A pdb (ifs_batch_stage1 --afdb_dir)
+#
+# Build on a gen-d node (login blocks compilers; mksquashfs 4.4 needs -processors 1):
+#   salloc --constraint=gen-d&scratch --cpus-per-task=8 --time=02:00:00 --mem=64G
+#   cd $HOME/ahoj_lbs/code/hpc
+#   apptainer build --fakeroot --mksquashfs-args "-processors 1" $HOME/ahoj_lbs/ifsitepred.sif ifsitepred.def
+# Verify the GPU is visible at runtime (needs --nv + a GPU node):
+#   apptainer exec --nv $HOME/ahoj_lbs/ifsitepred.sif mamba run -n esm_env \
+#       python -c "import torch; print('cuda', torch.cuda.is_available())"
+
+%post
+    set -eux
+    export MAMBA_ROOT_PREFIX=/opt/conda
+    export TORCH_HOME=/opt/torch_cache
+    mkdir -p /opt/torch_cache
+    # The build node has no GPU, so conda can't detect the __cuda virtual package and
+    # refuses a cuda-pinned pytorch. Aurum gen-d L40S driver 595.71 supports CUDA 13.2,
+    # so any cuda12 runtime works at --nv runtime; override the build-time probe.
+    export CONDA_OVERRIDE_CUDA="12.6"
+
+    # --- esm_env: ESM-IF1 + PyG stack + LightGBM + gemmi (CUDA 12 for L40S / Ada cc8.9) ---
+    # NOTE (first-build check): if `torch.cuda.is_available()` is False in %test, adjust the
+    # torch build spec to Aurum's driver/CUDA (see `nvidia-smi` on a gen-d salloc). The PyG
+    # wheels (pytorch_scatter/cluster/geometric) must match the resolved torch+CUDA.
+    mamba create -y -n esm_env -c conda-forge python=3.10 \
+        "pytorch=*=cuda12*" pytorch_scatter pytorch_cluster pytorch_geometric \
+        "biotite<1" lightgbm scikit-learn scipy numpy gemmi pip
+    mamba run -n esm_env pip install fair-esm
+    # prefetch ESM-IF1 (~0.5 GB) into the baked cache (build node reaches net via login NAT)
+    mamba run -n esm_env python -c "import esm; esm.pretrained.esm_if1_gvp4_t16_142M_UR50()"
+
+    # --- pymol_env: DBSCAN centres (CPU) ---
+    mamba create -y -n pymol_env -c conda-forge python=3.10 \
+        pymol-open-source scikit-learn pandas numpy scipy
+
+    # --- IF-SitePred repo for the 40 LightGBM classifiers (models/lgbm_if1_*.pkl) ---
+    git clone --depth 1 https://github.com/annacarbery/binding-sites /opt/binding-sites
+
+    mamba clean -a -y
+
+%environment
+    export MAMBA_ROOT_PREFIX=/opt/conda
+    export TORCH_HOME=/opt/torch_cache
+    export PYTHONNOUSERSITE=1
+    export MPLBACKEND=Agg
+
+%test
+    # Trivial by design: a failing %test aborts .sif creation. The real import/CUDA
+    # verification runs post-build in build.sbatch (via `apptainer exec`, non-fatal).
+    test -f /opt/binding-sites/models/lgbm_if1_0.pkl && echo "40 LGBMs present"
+
+%labels
+    project AHoJ-AlphaFold
+    stage 06_lbs_generality-hpc
+    tool IF-SitePred (ESM-IF1 + LightGBM + DBSCAN)

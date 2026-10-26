@@ -1,0 +1,8 @@
+# Proprietary Helvetica / Helvetica Neue font files: supply your own, never commit them.
+fonts/
+
+# The repo-wide .gitignore excludes *.tgz; the small AHoJ test archives are needed by the tests.
+!tests/fixtures/**/*.tgz
+
+# Scratch files some tests write next to themselves.
+tests/_tmp_*

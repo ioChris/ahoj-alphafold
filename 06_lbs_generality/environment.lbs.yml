@@ -1,0 +1,29 @@
+# Environment notes for the LBS-generality stage (Analysis 7, T3-2nd).
+#
+# The ADAPTER + SCORER (this repo's code) need only pandas + numpy (the repo base
+# env), except build_ground_truth_atoms.py which needs gemmi (use the repo's
+# analysis / py311 env, as for 04_p2rank/dataset/compute_afdb_pocket_geometry.py).
+#
+# The PREDICTORS themselves are external tools with their own (often conflicting)
+# environments — install each in its own env / container, run it, then bring only
+# its output table back here to normalize + score. On Windows, fpocket and most DL
+# tools need WSL2 (Ubuntu) or Docker; the colleague's RTX 3090/4090 box is the
+# natural home for the DL runs.
+#
+# This file pins ONLY the light env used by THIS repo's scripts.
+
+name: ahoj-af-lbs
+channels:
+  - conda-forge
+dependencies:
+  - python=3.11
+  - pandas
+  - numpy
+  - gemmi            # for build_ground_truth_atoms.py (ground-truth atoms from AF models)
+  # --- external predictors are NOT installed here; per-tool pointers: ---
+  # fpocket        : conda-forge `fpocket` (linux-64) OR github.com/Discngine/fpocket ; WSL2 on Windows.
+  # IF-SitePred    : github.com/oxpig/binding-sites (BSD-3) ; needs fair-esm (ESM-IF1) + a PyMOL env.
+  # GrASP          : github.com/tiwarylab/GrASP (MIT) ; PyTorch-Geometric (Py3.7/OpenBabel 2.4.1 pins).
+  # VN-EGNN        : github.com/ml-jku/vnegnn (MIT) ; PyTorch 2.x + PyG ; write a batch-inference loop.
+  # PUResNetV2.0   : has a P2Rank `rescore` adapter — can be DCA-scored via P2Rank directly.
+  # PeSTo          : github.com/LBM-EPFL/PeSTo ; no MSA/PLM ; consumes AF .cif/.pdb directly.
