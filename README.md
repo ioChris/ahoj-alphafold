@@ -34,6 +34,7 @@ one stage; data flows top to bottom.
 | 5 | [`04_p2rank/`](04_p2rank/) | Build the P2Rank input dataset and evaluate **P2Rank binding-site prediction** success vs apo/holo class, probability, and evidence balance (with size-controlled checks). |
 | 6 | [`05_docking/`](05_docking/) | Dock biologically-relevant ligands into AFDB pockets (**AutoDock Vina / Uni-Dock**) and relate docking success (affinity + pose recovery) to apo/holo class — the direct functional test complementing P2Rank/AlphaFill. Strategy: [`05_docking/docs/DOCKING_DESIGN.md`](05_docking/docs/DOCKING_DESIGN.md). |
 | 7 | [`06_lbs_generality/`](06_lbs_generality/) | Run *additional* binding-site predictors (**fpocket**, **IF-SitePred**) on the same AFDB pockets and recompute the same DCA/**TNS** success, showing the AF-Holo>AF-Apo detection gradient is **not P2Rank-specific**. One tool-agnostic heavy-atom scorer reproduces P2Rank's metric; the existing size-controlled analysis is reused. Results: manuscript Figure 3 and Supplementary Figures S4–S6. Strategy: [`06_lbs_generality/docs/LBS_GENERALITY_DESIGN.md`](06_lbs_generality/docs/LBS_GENERALITY_DESIGN.md). |
+| — | [`07_manuscript_analyses/`](07_manuscript_analyses/) | The **supplementary analyses**: the scripts behind the Supplementary Notes and Tables and the supplementary numbers quoted in the main text and Methods, each checked against its published output (see its README). |
 | — | [`plotting/`](plotting/) | Renders the main manuscript figures and SI figures for the classification / prevalence analyses (stages 1–3). |
 | — | [`common/`](common/) | Central path configuration (see below). |
 
@@ -73,6 +74,7 @@ Key conventions:
 │   ├── hpc/                # GPU full-run container + SLURM array scripts
 │   ├── redock/             # redocking RMSD against experimental ligand poses
 │   └── analysis/           # ingest results + correlate with apo/holo class
+├── 07_manuscript_analyses/ # supplementary analyses (Supplementary Notes, Tables S3–S13, Methods counts)
 ├── plotting/               # main + SI manuscript figure scripts
 ├── requirements.txt / environment.yml
 └── README.md

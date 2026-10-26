@@ -12,6 +12,7 @@ dependencies:
   - matplotlib>=3.6
   - scikit-learn>=1.1
   - seaborn>=0.12
+  - pyarrow>=12
   - plotly>=5.10
   - python-kaleido>=0.2.1   # static image export for plotly
   - gemmi>=0.6

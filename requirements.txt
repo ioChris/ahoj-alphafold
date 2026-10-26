@@ -10,6 +10,8 @@ matplotlib>=3.6
 scikit-learn>=1.1    # logistic-regression AUCs (ratio vs class), DBSCAN (IF-SitePred clustering)
 seaborn>=0.12        # two exploratory plots
 
+pyarrow>=12           # parquet intermediates (07_manuscript_analyses)
+
 # --- Plotting: interactive + static export (Sankey / classification-flow figures) ---
 plotly>=5.10
 kaleido>=0.2.1          # static image export (PNG/SVG/PDF) for plotly figures
