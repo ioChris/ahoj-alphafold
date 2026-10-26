@@ -35,6 +35,9 @@ authors:
     affiliation: "Department of Cell Biology, Faculty of Science, Charles University, Prague, Czech Republic"
 identifiers:
   - type: doi
+    value: 10.5281/zenodo.23667369
+    description: "This code, archived at Zenodo (all versions; v1.0.0 is 10.5281/zenodo.23667370)"
+  - type: doi
     value: 10.5281/zenodo.23243349
     description: "Data record: tables, predictions, docking results and AlphaFold models behind the manuscript"
 keywords:

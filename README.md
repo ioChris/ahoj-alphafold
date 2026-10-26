@@ -14,7 +14,9 @@ then compared against AlphaFill ligand transplants and P2Rank binding-site predi
 
 > **Status:** research code accompanying the manuscript *A tale of two states: AlphaFold binding
 > pockets on the apo–holo continuum* (submitted; preprint DOI to follow). The data are at Zenodo,
-> [10.5281/zenodo.23243349](https://doi.org/10.5281/zenodo.23243349). Scripts are run
+> [10.5281/zenodo.23243349](https://doi.org/10.5281/zenodo.23243349), and this code is archived at
+> [10.5281/zenodo.23667369](https://doi.org/10.5281/zenodo.23667369) (all versions; release v1.0.0 is
+> [10.5281/zenodo.23667370](https://doi.org/10.5281/zenodo.23667370)). Scripts are run
 > interactively (e.g. in Spyder) or from a shell; settings live in a top-of-file config block or
 > argparse defaults, both sourced from a single central path registry ([`common/`](common/)).
 
